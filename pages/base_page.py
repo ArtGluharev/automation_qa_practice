@@ -46,3 +46,6 @@ class BasePage:
     def remove_footer(self):
         self.driver.execute_script("document.getElementsByTagName('footer')[0].remove();")
         self.driver.execute_script("document.getElementById('close-fixedban').remove();")
+
+    def go_to_new_tab(self, locator, timeout=5):
+        return wait(self.driver, timeout).until(EC.visibility_of_element_located(locator))

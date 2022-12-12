@@ -27,3 +27,16 @@ class NestedFramesPageLocators:
     PARENT_TEXT = (By.CSS_SELECTOR, 'body')
     CHILD_FRAME = (By.CSS_SELECTOR, 'iframe[srcdoc="<p>Child Iframe</p>"]')
     CHILD_TEXT = (By.CSS_SELECTOR, 'p')
+
+
+class TestModalDialogPageLocators:
+    # Small
+    SMALL_MODAL_BUTTON = (By.CSS_SELECTOR, 'button[id="showSmallModal"]')
+    TITLE_SMALl_MODAL = (By.CSS_SELECTOR, 'div[id="example-modal-sizes-title-sm"]')
+    BODY_SMALl_MODAL = (By.CSS_SELECTOR, 'div[class="modal-body"]')
+    SMALL_MODAL_CLOSE_BUTTON = (By.CSS_SELECTOR, 'button[id="closeSmallModal"]')
+    # Large
+    LARGE_MODAL_BUTTON = (By.CSS_SELECTOR, 'button[id="showLargeModal"]')
+    TITLE_LARGE_MODAL_MODAL = (By.CSS_SELECTOR, 'div[id="example-modal-sizes-title-lg"]')
+    BODY_LARGE_MODAL_MODAL = (By.CSS_SELECTOR, 'div[class="modal-body"] p')
+    LARGE_MODAL_CLOSE_BUTTON = (By.CSS_SELECTOR, 'button[id="closeLargeModal"]')

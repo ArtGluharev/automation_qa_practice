@@ -4,11 +4,13 @@ import random
 import time
 
 import requests
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 
 from generator.generator import generated_person, generated_file
 from locators.elements_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonLocators, \
-    WebTablePageLocators, ButtonsPageLocators, LinksPageLocators, UploadAndDownloadPageLocators
+    WebTablePageLocators, ButtonsPageLocators, LinksPageLocators, UploadAndDownloadPageLocators, \
+    DynamicPropertiesPageLocators
 from pages.base_page import BasePage
 
 
@@ -209,10 +211,37 @@ class UploadAndDownloadPage(BasePage):
         link = self.element_is_present(self.locators.DOWNLOAD_FILE).get_attribute('href')
         link_b = base64.b64decode(link)
         path_name_file = rf'C:\Users\aptem\PycharmProjects\automation_qa_practice\filetest{random.randint(0, 999)}.jpg'
-        with open(path_name_file,'wb+') as f:
+        with open(path_name_file, 'wb+') as f:
             offset = link_b.find(b'\xff\xd8')
             f.write(link_b[offset:])
             check_file = os.path.exists(path_name_file)
             f.close()
         os.remove(path_name_file)
         return check_file
+
+
+class DynamicPropertiesPage(BasePage):
+    locators = DynamicPropertiesPageLocators()
+    def check_enable_button(self):
+        try:
+            self.element_is_clickable(self.locators.ENABLE_BUTTON)
+        except TimeoutException:
+            return False
+        return True
+
+
+
+    def check_change_of_color(self):
+        color_button = self.element_is_present(self.locators.COLOR_CHANGE)
+        color_button_before = color_button.value_of_css_property('color')
+        time.sleep(5)
+        color_button_after = color_button.value_of_css_property('color')
+        return color_button_before, color_button_after
+
+    def check_appear_of_button(self):
+        try:
+            self.element_is_visible(self.locators.VISIBLE_AFTER_FIVE_SEC_BUTTON)
+        except TimeoutException:
+            return False
+        return True
+

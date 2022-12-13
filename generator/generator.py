@@ -2,9 +2,10 @@ import random
 
 from faker import Faker
 
-from data_tests.data import Person, Color
+from data_tests.data import Person, Color, Date
 
 faker_ru = Faker('ru_RU')
+faker_en = Faker('En')
 Faker.seed()
 
 
@@ -37,4 +38,13 @@ def generated_color():
                     "Yellow", "Purple", "Black",
                     "White", "Voilet", "Indigo",
                     "Magenta", "Aqua"]
+    )
+
+
+def generated_date():
+    yield Date(
+        year=faker_en.year(),
+        month=faker_en.month_name(),
+        day=faker_en.day_of_month(),
+        time="12:00",
     )

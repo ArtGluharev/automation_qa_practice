@@ -49,3 +49,8 @@ class BasePage:
 
     def go_to_new_tab(self, locator, timeout=5):
         return wait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
+
+    def action_drag_and_drop_by_offset(self,element,x_coords,y_ccords):
+        action = ActionChains(self.driver)
+        action.drag_and_drop_by_offset(element,x_coords,y_ccords)
+        action.perform()

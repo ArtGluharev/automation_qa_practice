@@ -1,9 +1,13 @@
+import allure
+
 from pages.interactions_page import SortablePage, SelectablePage, ResizablePage, DroppablePage, DraggablePage
 
 
+@allure.suite("Тестирование страницы Interactions")
 class TestInteractionsPage:
+    @allure.feature("Тестирование Sortable")
     class TestSortablePage:
-
+        @allure.title("Тестирование сортировки")
         def test_sortable_page(self, driver):
             sortable_page = SortablePage(driver, 'https://demoqa.com/sortable')
             sortable_page.open()
@@ -12,8 +16,9 @@ class TestInteractionsPage:
             assert list_before != list_after, "The order of the list has not been changed"
             assert grid_before != grid_after, "The order of the grid has not been changed"
 
+    @allure.feature("Тестирование Selectable")
     class TestSelectablePage:
-
+        @allure.title("Тестирование выборочных")
         def test_selectable_page(self, driver):
             selectable_page = SelectablePage(driver, 'https://demoqa.com/selectable')
             selectable_page.open()
@@ -22,8 +27,9 @@ class TestInteractionsPage:
             assert len(item_list) > 0, "No elements were selected"
             assert len(item_grid) > 0, "No elements were selected"
 
+    @allure.feature("Тестирование Resizable")
     class TestResizablePage:
-
+        @allure.title("Тестирование изменяемых в размере окон")
         def test_resizable_page(self, driver):
             resizable_page = ResizablePage(driver, 'https://demoqa.com/resizable')
             resizable_page.open()
@@ -33,8 +39,9 @@ class TestInteractionsPage:
             assert ('150px', '150px') == min_box
             assert min_resize != max_resize
 
+    @allure.feature("Тестирование Droppable")
     class TestDroppablePage:
-
+        @allure.title("Тестирование Simple droppable")
         def test_simple_droppable(self, driver):
             droppable_page = DroppablePage(driver, 'https://demoqa.com/droppable')
             droppable_page.open()
@@ -42,6 +49,7 @@ class TestInteractionsPage:
             print(text)
             assert text == "Dropped!", "The element has not been dropped"
 
+        @allure.title("Тестирование Accept droppable")
         def test_accept_droppable(self, driver):
             droppable_page = DroppablePage(driver, 'https://demoqa.com/droppable')
             droppable_page.open()
@@ -49,6 +57,7 @@ class TestInteractionsPage:
             assert not_accept_text == "Drop here", "the dropped element has not been accepted"
             assert accept_text == "Dropped!", "the dropped element has been accepted"
 
+        @allure.title("Тестирование prevent propogation droppable")
         def test_prevent_propogation_droppable(self, driver):
             droppable_page = DroppablePage(driver, 'https://demoqa.com/droppable')
             droppable_page.open()
@@ -58,6 +67,7 @@ class TestInteractionsPage:
             assert greedy == "Outer droppable", "The elements texts has been changed"
             assert greedy_inner == "Dropped!", "The elements texts has not been changed"
 
+        @allure.title("Тестирование Revert draggable")
         def test_revert_draggable_droppable(self, driver):
             droppable_page = DroppablePage(driver, 'https://demoqa.com/droppable')
             droppable_page.open()
@@ -66,14 +76,16 @@ class TestInteractionsPage:
             assert will_after_move != will_after_revert, "The elements has not reverted"
             assert not_will_after_move == not_will_after_revert, "The elements has reverted"
 
+    @allure.feature("Тестирование страницы Draggable")
     class TestDraggablePage:
-
+        @allure.title("Тестирование простого Draggable")
         def test_draggable_page(self, driver):
             draggable_page = DraggablePage(driver, 'https://demoqa.com/dragabble')
             draggable_page.open()
             before, after = draggable_page.simple_drag_box()
             assert before != after, "The position of the box has not been changed"
 
+        @allure.title("Тестирование только по ося X или Y")
         def test_axis_restricted_draggable(self, driver):
             draggable_page = DraggablePage(driver, 'https://demoqa.com/dragabble')
             draggable_page.open()

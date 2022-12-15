@@ -1,6 +1,7 @@
 import random
 import time
 
+import allure
 from selenium.common import TimeoutException
 from selenium.webdriver import Keys
 from selenium.webdriver.support.select import Select
@@ -15,6 +16,7 @@ from pages.base_page import BasePage
 class AccordianPage(BasePage):
     locators = AccordianPageLocators()
 
+    @allure.step("Метод для выбора нужного подзаголовка с текстом")
     def check_accordian(self, accordian_num):
         accordian = {'first': {'title': self.locators.SECTION_ONE,
                                'content': self.locators.SECTION_ONE_CONTENT},
@@ -36,6 +38,7 @@ class AccordianPage(BasePage):
 class AutoCompletePage(BasePage):
     locators = AutoCompletePageLocators()
 
+    @allure.step("Заполнение поля с несколькими элементами")
     def fill_input_multi(self):
         colors = random.sample(next(generated_color()).color_name, k=random.randint(2, 5))
         for color in colors:
@@ -45,6 +48,7 @@ class AutoCompletePage(BasePage):
             input_multi.send_keys(Keys.ENTER)
         return colors
 
+    @allure.step("Метод удаление данных из поля с несколькими элементами")
     def remove_value_from_multi_result(self):
         count_value_before = len(self.elements_are_present(self.locators.MULTI_VALUE))
         remove_button_list = self.elements_are_visible(self.locators.MULTI_VALUE_REMOVE)
@@ -54,6 +58,7 @@ class AutoCompletePage(BasePage):
         count_value_after = len(self.elements_are_present(self.locators.MULTI_VALUE))
         return count_value_before, count_value_after
 
+    @allure.step("Метод проверки необходимого цвета кнопки")
     def check_color_in_multi(self):
         color_list = self.elements_are_present(self.locators.MULTI_VALUE)
         colors = []
@@ -61,6 +66,7 @@ class AutoCompletePage(BasePage):
             colors.append(color.text)
         return colors
 
+    @allure.step("Метод полного заполнения поля с несколькими элементами и его опустошение")
     def fill_input_multi_and_clear(self):
         colors = random.sample(next(generated_color()).color_name, k=random.randint(2, 5))
         for color in colors:
@@ -72,6 +78,7 @@ class AutoCompletePage(BasePage):
         colors = self.elements_are_present(self.locators.MULTI_INPUT).clear()
         return colors
 
+    @allure.step("Метод заполнения единичного поля")
     def fill_input_single(self):
         color = random.sample(next(generated_color()).color_name, k=1)
         input_single = self.element_is_clickable(self.locators.SINGLE_INPUT)
@@ -80,6 +87,7 @@ class AutoCompletePage(BasePage):
         input_single.send_keys(Keys.ENTER)
         return color[0]
 
+    @allure.step("Метод проверки необходимого цвета единичного поля")
     def check_color_in_single(self):
         color = self.element_is_visible(self.locators.SINGLE_CONTAINER)
         return color.text
@@ -88,6 +96,7 @@ class AutoCompletePage(BasePage):
 class DatePickerPage(BasePage):
     locators = DatePickerPageLocators()
 
+    @allure.step("Метод выбора даты")
     def select_date(self):
         date = next(generated_date())
         input_date = self.element_is_visible(self.locators.DATE_INPUT)
@@ -99,6 +108,7 @@ class DatePickerPage(BasePage):
         value_date_after = input_date.get_attribute('value')
         return value_date_before, value_date_after
 
+    @allure.step("Метод выбора даты и времени")
     def select_date_and_time(self):
         date = next(generated_date())
         input_date = self.element_is_visible(self.locators.DATE_AND_TIME_INPUT)
@@ -128,6 +138,7 @@ class DatePickerPage(BasePage):
 class SliderPage(BasePage):
     locators = TestSliderPageLocators()
 
+    @allure.step("Метод изменения значения слайдера")
     def change_slider_value(self):
         value_before = self.element_is_visible(self.locators.SLIDER_VALUE).get_attribute('value')
         slider_input = self.element_is_visible(self.locators.INPUT_SLIDER)
@@ -139,6 +150,7 @@ class SliderPage(BasePage):
 class ProgressBarPage(BasePage):
     locators = TestProgressBarPageLocators()
 
+    @allure.step("Метод изменения шкалы заполнения")
     def change_progress_bar_value(self):
         value_before = self.element_is_present(self.locators.PROGRESS_BAR_VALUE).text
         progress_bar_button = self.element_is_visible(self.locators.PROGRESS_BAR_BUTTON)
@@ -152,6 +164,7 @@ class ProgressBarPage(BasePage):
 class TabsPage(BasePage):
     locators = TestTabsPageLocators()
 
+    @allure.step("Метод выбора нужного подзаголовка с текстом")
     def check_tabs(self, name_tab):
         tabs = {'what':
                     {'title': self.locators.TABS_WHAT,
@@ -176,6 +189,7 @@ class TabsPage(BasePage):
 class ToolTipsPage(BasePage):
     locators = ToolTipsPageLocators()
 
+    @allure.step("Метод получения данных из ссылок")
     def get_text_from_tool_tips(self, hover_elem, wait_elem):
         element = self.element_is_present(hover_elem)
         self.action_move_to_element(element)
@@ -185,6 +199,7 @@ class ToolTipsPage(BasePage):
         text = tool_tip_text.text
         return text
 
+    @allure.step("Метод проверки данных из ссылок")
     def check_tool_tips(self):
         tool_tip_text_button = self.get_text_from_tool_tips(self.locators.BUTTON, self.locators.TOOL_TIP_BUTTON)
         tool_tip_text_field = self.get_text_from_tool_tips(self.locators.FIELD, self.locators.TOOL_TIP_FIELD)
@@ -197,6 +212,7 @@ class ToolTipsPage(BasePage):
 class MenuPage(BasePage):
     locators = MenuPageLocators()
 
+    @allure.step("Метод проверки меню")
     def check_menu(self):
         menu_item_list = self.elements_are_present(self.locators.MENU_ITEM_LIST)
         data = []
